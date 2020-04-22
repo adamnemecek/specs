@@ -17,15 +17,15 @@ mod gpuvecstorage;
 pub struct GPUDenseVecStorage<T: Copy> {
     data: GPUVec<T>,
     entity_id: Vec<Index>,
-    data_id: GPUVec<MaybeUninit<Index>>,
+    index: GPUVec<MaybeUninit<Index>>,
 }
 
 impl<T: Copy> GPUDenseVecStorage<T> {
-    // todo
-    pub fn data_id(&self) -> &GPUVec<MaybeUninit<Index>> {
-        &self.data_id
+    /// docs
+    pub fn index(&self) -> &GPUVec<MaybeUninit<Index>> {
+        &self.index
     }
-    /// get the allocation
+    /// docs
     pub fn data(&self) -> &GPUVec<T> {
         &self.data
     }
@@ -36,7 +36,7 @@ impl<T: Copy> Default for GPUDenseVecStorage<T> {
         Self {
             data: Default::default(),
             entity_id: Default::default(),
-            data_id: Default::default(),
+            index: Default::default(),
         }
     }
 }
@@ -72,23 +72,23 @@ impl<T: Copy> UnprotectedStorage<T> for GPUDenseVecStorage<T> {
     }
 
     unsafe fn get(&self, id: Index) -> &T {
-        let did = self.data_id.get_unchecked(id as usize).assume_init();
+        let did = self.index.get_unchecked(id as usize).assume_init();
         self.data.get_unchecked(did as usize)
     }
 
     unsafe fn get_mut(&mut self, id: Index) -> &mut T {
-        let did = self.data_id.get_unchecked(id as usize).assume_init();
+        let did = self.index.get_unchecked(id as usize).assume_init();
         self.data.get_unchecked_mut(did as usize)
     }
 
     unsafe fn insert(&mut self, id: Index, v: T) {
         let id = id as usize;
-        if self.data_id.len() <= id {
-            let delta = id + 1 - self.data_id.len();
-            self.data_id.reserve(delta);
-            self.data_id.set_len(id + 1);
+        if self.index.len() <= id {
+            let delta = id + 1 - self.index.len();
+            self.index.reserve(delta);
+            self.index.set_len(id + 1);
         }
-        self.data_id
+        self.index
             .get_unchecked_mut(id)
             .as_mut_ptr()
             .write(self.data.len() as Index);
@@ -97,9 +97,9 @@ impl<T: Copy> UnprotectedStorage<T> for GPUDenseVecStorage<T> {
     }
 
     unsafe fn remove(&mut self, id: Index) -> T {
-        let did = self.data_id.get_unchecked(id as usize).assume_init();
+        let did = self.index.get_unchecked(id as usize).assume_init();
         let last = *self.entity_id.last().unwrap();
-        self.data_id
+        self.index
             .get_unchecked_mut(last as usize)
             .as_mut_ptr()
             .write(did);
