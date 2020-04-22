@@ -26,14 +26,17 @@ impl<T: Copy> GPUDenseVecStorage<T> {
         &self.index
     }
 
+    /// docs
     pub fn index_mut(&mut self) -> &mut GPUVec<MaybeUninit<Index>> {
         &mut self.index
     }
+
     /// docs
     pub fn data(&self) -> &GPUVec<T> {
         &self.data
     }
 
+    /// docs
     pub fn data_mut(&mut self) -> &mut GPUVec<T> {
         &mut self.data
     }
