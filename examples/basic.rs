@@ -57,9 +57,12 @@ fn main() {
 
     // An entity may or may not contain some component.
 
-    world.create_entity().with(Vel(2.0)).with(Pos(0.0)).build();
-    world.create_entity().with(Vel(4.0)).with(Pos(1.6)).build();
-    world.create_entity().with(Vel(1.5)).with(Pos(5.4)).build();
+    let a = world.create_entity().with(Vel(2.0)).with(Pos(0.0)).build();
+    let b = world.create_entity().with(Vel(4.0)).with(Pos(1.6)).build();
+    let c = world.create_entity().with(Vel(1.5)).with(Pos(5.4)).build();
+    println!("{:?}", a);
+    println!("{:?}", b);
+    println!("{:?}", c);
 
     // This entity does not have `Vel`, so it won't be dispatched.
     world.create_entity().with(Pos(2.0)).build();

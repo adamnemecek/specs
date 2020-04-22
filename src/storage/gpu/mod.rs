@@ -13,15 +13,18 @@ use metalgear::GPUVec;
 
 mod gpuvecstorage;
 
-
 /// Like `DenseVecStorage` but on the GPU
 pub struct GPUDenseVecStorage<T: Copy> {
     data: GPUVec<T>,
     entity_id: Vec<Index>,
-    data_id: Vec<MaybeUninit<Index>>,
+    data_id: GPUVec<MaybeUninit<Index>>,
 }
 
 impl<T: Copy> GPUDenseVecStorage<T> {
+    // todo
+    pub fn data_id(&self) -> &GPUVec<MaybeUninit<Index>> {
+        &self.data_id
+    }
     /// get the allocation
     pub fn data(&self) -> &GPUVec<T> {
         &self.data
