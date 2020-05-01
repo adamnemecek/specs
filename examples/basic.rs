@@ -4,18 +4,18 @@ use specs::prelude::*;
 
 // A component contains data which is associated with an entity.
 
-#[derive(Debug)]
+#[derive(Clone, Copy, Debug)]
 struct Vel(f32);
 
 impl Component for Vel {
-    type Storage = VecStorage<Self>;
+    type Storage = DenseVecStorage<Self>;
 }
 
-#[derive(Debug)]
+#[derive(Clone, Copy, Debug)]
 struct Pos(f32);
 
 impl Component for Pos {
-    type Storage = VecStorage<Self>;
+    type Storage = DenseVecStorage<Self>;
 }
 
 struct SysA;
