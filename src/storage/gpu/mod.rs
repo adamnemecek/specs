@@ -4,10 +4,11 @@ use std::{mem::MaybeUninit};
 use hibitset::BitSetLike;
 
 use crate::{
-    storage::{DistinctStorage, UnprotectedStorage},
+    storage::{DistinctStorage, UnprotectedStorage, Storage},
     world::Index,
 };
 use super::SliceAccess;
+use std::ops::DerefMut;
 
 use metalgear::GPUVec;
 
@@ -22,25 +23,57 @@ pub struct GPUDenseVecStorage<T: Copy> {
 
 impl<T: Copy> GPUDenseVecStorage<T> {
     /// docs
-    pub fn index(&self) -> &GPUVec<MaybeUninit<Index>> {
+    pub fn gpu_index(&self) -> &GPUVec<MaybeUninit<Index>> {
         &self.index
     }
 
-    /// docs
-    pub fn index_mut(&mut self) -> &mut GPUVec<MaybeUninit<Index>> {
-        &mut self.index
-    }
+    // docs
+    // * you probably should not be accessing these mutably as that
+    //      fuck with the inner structure
+    // pub fn gpu_index_mut(&mut self) -> &mut GPUVec<MaybeUninit<Index>> {
+    //     &mut self.index
+    // }
 
     /// docs
-    pub fn data(&self) -> &GPUVec<T> {
+    pub fn gpu_data(&self) -> &GPUVec<T> {
         &self.data
     }
 
-    /// docs
-    pub fn data_mut(&mut self) -> &mut GPUVec<T> {
-        &mut self.data
-    }
+    // docs
+    // pub fn gpu_data_mut(&mut self) -> &mut GPUVec<T> {
+    //     &mut self.data
+    // }
 }
+
+// use metalgear::GPUResource;
+
+// fn test(vec: GPUVec<u32>, encoder: &metal::RenderCommandEncoderRef) {
+//     let d = vec.device();
+//     let queue = d.new_command_queue();
+//     let command_buffer = queue.new_command_buffer();
+
+// }
+
+// #[derive(Clone, Copy)]
+// struct TestComp;
+
+// impl crate::Component for TestComp {
+//     type Storage = GPUDenseVecStorage<Self>;
+// }
+
+// struct TestSystem;
+
+// impl<'a> crate::System<'a> for TestSystem {
+//     type SystemData = (
+//         crate::ReadStorage<'a, TestComp>
+//     );
+
+//     fn run(&mut self, data: Self::SystemData) {
+//         let z = data.unprotected_storage();
+//         let x = z.gpu_data();
+//         // let z = data.inner.gpu_index();
+//     }
+// }
 
 impl<T: Copy> Default for GPUDenseVecStorage<T> {
     fn default() -> Self {
@@ -120,4 +153,3 @@ impl<T: Copy> UnprotectedStorage<T> for GPUDenseVecStorage<T> {
 }
 
 unsafe impl<T: Copy> DistinctStorage for GPUDenseVecStorage<T> {}
-
