@@ -7,7 +7,7 @@ pub use self::{
     generic::{GenericReadStorage, GenericWriteStorage},
     restrict::{
         ImmutableParallelRestriction, MutableParallelRestriction, RestrictedStorage,
-        SequentialRestriction,
+        SequentialRestriction, PairedStorage
     },
     storages::{
         BTreeStorage, DefaultVecStorage, DenseVecStorage, HashMapStorage, NullStorage, VecStorage,
@@ -555,8 +555,9 @@ pub trait UnprotectedStorage<T>: TryDefault {
     unsafe fn remove(&mut self, id: Index) -> T;
 
     /// Drops the data associated with an `Index`.
-    /// This is simply more efficient than `remove` and can be used if the data
+    /// This could be used when a more efficient implementation for it exists than `remove` when the data
     /// is no longer needed.
+    /// Defaults to simply calling `remove`.
     ///
     /// # Safety
     ///
