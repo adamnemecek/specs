@@ -14,6 +14,11 @@ use metalgear::GPUVec;
 
 mod gpuvecstorage;
 
+pub trait GPUStorage<T: Copy> {
+    fn gpu_index(&self) -> &GPUVec<MaybeUninit<Index>>;
+    fn gpu_data(&self) -> &GPUVec<T>;
+}
+
 /// Like `DenseVecStorage` but on the GPU
 pub struct GPUDenseVecStorage<T: Copy> {
     data: GPUVec<T>,
@@ -21,9 +26,11 @@ pub struct GPUDenseVecStorage<T: Copy> {
     index: GPUVec<MaybeUninit<Index>>,
 }
 
-impl<T: Copy> GPUDenseVecStorage<T> {
+
+
+impl<T: Copy> GPUStorage<T> for GPUDenseVecStorage<T> {
     /// docs
-    pub fn gpu_index(&self) -> &GPUVec<MaybeUninit<Index>> {
+    fn gpu_index(&self) -> &GPUVec<MaybeUninit<Index>> {
         &self.index
     }
 
@@ -35,7 +42,7 @@ impl<T: Copy> GPUDenseVecStorage<T> {
     // }
 
     /// docs
-    pub fn gpu_data(&self) -> &GPUVec<T> {
+    fn gpu_data(&self) -> &GPUVec<T> {
         &self.data
     }
 
