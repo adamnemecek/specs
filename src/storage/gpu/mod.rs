@@ -1,4 +1,4 @@
-use std::{mem::MaybeUninit};
+use std::mem::MaybeUninit;
 
 // use hashbrown::HashMap;
 use hibitset::BitSetLike;
@@ -8,7 +8,7 @@ use crate::{
     world::Index,
 };
 use super::SliceAccess;
-use std::ops::DerefMut;
+// use std::ops::DerefMut;
 
 use metalgear::GPUVec;
 
