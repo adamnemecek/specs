@@ -5,14 +5,14 @@ pub use self::{
     entry::{Entries, OccupiedEntry, StorageEntry, VacantEntry},
     flagged::FlaggedStorage,
     generic::{GenericReadStorage, GenericWriteStorage},
+    gpu::{GPUDenseVecStorage, GPUStorage},
     restrict::{
-        ImmutableParallelRestriction, MutableParallelRestriction, RestrictedStorage,
-        SequentialRestriction, PairedStorage
+        ImmutableParallelRestriction, MutableParallelRestriction, PairedStorage, RestrictedStorage,
+        SequentialRestriction,
     },
     storages::{
         BTreeStorage, DefaultVecStorage, DenseVecStorage, HashMapStorage, NullStorage, VecStorage,
     },
-    gpu::{GPUStorage, GPUDenseVecStorage},
     track::{ComponentEvent, Tracked},
 };
 
@@ -555,8 +555,8 @@ pub trait UnprotectedStorage<T>: TryDefault {
     unsafe fn remove(&mut self, id: Index) -> T;
 
     /// Drops the data associated with an `Index`.
-    /// This could be used when a more efficient implementation for it exists than `remove` when the data
-    /// is no longer needed.
+    /// This could be used when a more efficient implementation for it exists
+    /// than `remove` when the data is no longer needed.
     /// Defaults to simply calling `remove`.
     ///
     /// # Safety

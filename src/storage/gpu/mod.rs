@@ -3,11 +3,11 @@ use std::mem::MaybeUninit;
 // use hashbrown::HashMap;
 use hibitset::BitSetLike;
 
+use super::SliceAccess;
 use crate::{
-    storage::{DistinctStorage, UnprotectedStorage, Storage},
+    storage::{DistinctStorage, Storage, UnprotectedStorage},
     world::Index,
 };
-use super::SliceAccess;
 // use std::ops::DerefMut;
 
 use metalgear::GPUVec;
@@ -26,8 +26,6 @@ pub struct GPUDenseVecStorage<T: Copy> {
     index: GPUVec<MaybeUninit<Index>>,
 }
 
-
-
 impl<T: Copy> GPUStorage<T> for GPUDenseVecStorage<T> {
     /// docs
     fn gpu_index(&self) -> &GPUVec<MaybeUninit<Index>> {
@@ -35,8 +33,8 @@ impl<T: Copy> GPUStorage<T> for GPUDenseVecStorage<T> {
     }
 
     // docs
-    // * you probably should not be accessing these mutably as that
-    //      fuck with the inner structure
+    // * you probably should not be accessing these mutably as that fuck with the
+    //   inner structure
     // pub fn gpu_index_mut(&mut self) -> &mut GPUVec<MaybeUninit<Index>> {
     //     &mut self.index
     // }

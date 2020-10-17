@@ -20,8 +20,11 @@ pub use shred::AsyncDispatcher;
 pub use crate::{
     changeset::ChangeSet,
     storage::{
-        ComponentEvent, DefaultVecStorage, DenseVecStorage, FlaggedStorage, GPUDenseVecStorage, GPUStorage, HashMapStorage,
-        NullStorage, ReadStorage, Storage, Tracked, VecStorage, WriteStorage,
+        ComponentEvent, DefaultVecStorage, DenseVecStorage, FlaggedStorage, GPUDenseVecStorage,
+        GPUStorage, HashMapStorage, NullStorage, ReadStorage, Storage, Tracked, VecStorage,
+        WriteStorage,
     },
-    world::{Builder, Component, Entities, Entity, Generation, EntityBuilder, LazyUpdate, WorldExt},
+    world::{
+        Builder, Component, Entities, Entity, EntityBuilder, Generation, LazyUpdate, WorldExt,
+    },
 };

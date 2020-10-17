@@ -224,8 +224,8 @@ pub use crate::{
     changeset::ChangeSet,
     join::Join,
     storage::{
-        DefaultVecStorage, DenseVecStorage, FlaggedStorage, GPUDenseVecStorage, GPUStorage, HashMapStorage, NullStorage,
-        ReadStorage, Storage, Tracked, VecStorage, WriteStorage,
+        DefaultVecStorage, DenseVecStorage, FlaggedStorage, GPUDenseVecStorage, GPUStorage,
+        HashMapStorage, NullStorage, ReadStorage, Storage, Tracked, VecStorage, WriteStorage,
     },
     world::{Builder, Component, Entities, Entity, EntityBuilder, LazyUpdate, WorldExt},
 };
