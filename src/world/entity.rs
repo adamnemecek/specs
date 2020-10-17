@@ -384,12 +384,12 @@ impl fmt::Debug for Generation {
 
 impl Generation {
     pub(crate) fn one() -> Self {
-        Generation(unsafe { NonZeroI32::new_unchecked(1) })
+        Self(unsafe { NonZeroI32::new_unchecked(1) })
     }
 
     #[cfg(test)]
     pub fn new(v: i32) -> Self {
-        Generation(NonZeroI32::new(v).expect("generation id must be non-zero"))
+        Self(NonZeroI32::new(v).expect("generation id must be non-zero"))
     }
 
     /// Returns the id of the generation.
@@ -409,9 +409,9 @@ impl Generation {
     /// # Panics
     ///
     /// Panics if it is alive.
-    fn raised(self) -> Generation {
+    fn raised(self) -> Self {
         assert!(!self.is_alive());
-        unsafe { Generation(NonZeroI32::new_unchecked(1 - self.id())) }
+        unsafe { Self(NonZeroI32::new_unchecked(1 - self.id())) }
     }
 }
 
