@@ -240,6 +240,23 @@ impl Entity {
     pub fn gen(self) -> Generation {
         self.1
     }
+
+    /// An invalid Entity
+    #[allow(non_upper_case_globals)]
+    pub const None: Self = Self(u32::MAX, Generation(NonZeroI32::new(i32::MAX).unwrap()));
+
+
+    /// Checks if Entity is none
+    #[inline]
+    pub fn is_none(&self) -> bool {
+        self == &Self::None
+    }
+
+    /// Checks if Entity is some
+    #[inline]
+    pub fn is_some(&self) -> bool {
+        !self.is_none()
+    }
 }
 
 /// The entities of this ECS. This is a resource, stored in the `World`.

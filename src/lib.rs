@@ -1,4 +1,5 @@
 #![warn(missing_docs)]
+#![feature(const_option)]
 
 //! # SPECS Parallel ECS
 //!
