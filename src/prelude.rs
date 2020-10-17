@@ -23,5 +23,5 @@ pub use crate::{
         ComponentEvent, DefaultVecStorage, DenseVecStorage, FlaggedStorage, GPUDenseVecStorage, GPUStorage, HashMapStorage,
         NullStorage, ReadStorage, Storage, Tracked, VecStorage, WriteStorage,
     },
-    world::{Builder, Component, Entities, Entity, EntityBuilder, LazyUpdate, WorldExt},
+    world::{Builder, Component, Entities, Entity, Generation, EntityBuilder, LazyUpdate, WorldExt},
 };
